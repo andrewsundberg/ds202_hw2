@@ -1,0 +1,69 @@
+---
+title: 'Homework #2'
+author: "Andrew Sundberg; andrewsundberg"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R commands
+1. Today's temperature has a high of 15 and a low of -10 degree fahrenheit.  Find the corresponding degress in celsius and storage it in a (single) vector named `cel`. Print the variable.
+```{r}
+fahr = c(15, -10)
+cel = (((fahr - 32) * 5) / 9)
+cel
+```
+
+2. Create a vector of length 200. The odd entries should be 1 and even entries should be 0. Storage the created in a variable named `vec200` and print.
+```{r}
+vec200 = rep(c(0,1), 100)
+vec200
+```
+
+3. How many perfect squares are there between 1 and 1001? Storage the answer in a  variable named `numPerfect` and print. You may want to look at `?round`.
+```{r}
+numPerfect = floor(sqrt(1001)) - ceiling(sqrt(1)) + 1
+numPerfect
+```
+
+
+
+1. What are the 3 most fuel-efficient models in terms of highway mileage? Storage the data frame (with 3 rows) containing all information of these three cars in a variable named `top3` and print.
+```{r}
+library(ggplot2)
+newdata = mpg[order(mpg$hwy),]
+top3 = tail(newdata,3)
+top3
+```
+
+2. How many different compact models are included in this dataset? Storage the answer in  a variable named `numCompact` and print.
+```{r}
+compact_mpg = mpg[mpg$class == 'compact',]
+numCompact = length(unique(compact_mpg$model))
+numCompact
+```
+
+3. Create a scatterplot of `hwy` and `cty` and describe the relationship. Why are there so few points visible?
+```{r}
+plot(mpg$hwy, mpg$cty, xlab = 'Highway MPG', ylab = 'City MPG')
+```
+There are missing points because there are multiple cars in the same data point in some cases.
+
+
+4. Are cars in 2008 more fuel efficient than cars in 1999? Use graphs *and* summary statistics to answer this question. 
+```{r}
+mpg1999 = mpg[mpg$year == 1999,]
+mpg2008 = mpg[mpg$year == 2008,]
+
+summary(mpg1999)
+summary(mpg2008)
+
+boxplot(mpg1999$hwy, mpg2008$hwy, main = 'Highway Fuel Efficiency')
+boxplot(mpg1999$cty, mpg2008$cty, main = 'City Fuel Efficiency')
+```
+The boxplot shows that the mean MPG for both city and the highway is around the same value across the two years.  Therefore, cars in 2008 are not more fuel efficient than cars in 1999.
+
+
